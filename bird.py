@@ -7,7 +7,7 @@ from state_machine import StateMachine
 
 # Bird Speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-RUN_SPEED_KMPH = 300.0  # 100km/h
+RUN_SPEED_KMPH = 100.0  # 100km/h
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)  # pixel per m
@@ -40,13 +40,13 @@ class Bird:
         self.frame = (self.frame + FRAMES_PER_SECOND * game_framework.frame_time) % 14
         self.x += self.dir * game_framework.frame_time * PIXEL_PER_METER
 
-        if self.x > 800 or self.x < 0:
+        if self.x > 1600 or self.x < 0:
             self.dir *= -1
 
     def draw(self):
         if self.dir == 1:
             self.image.clip_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, self.x, self.y)
         else:
-            self.image.clip_opposite_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, self.x, self.y, -182, 168)
+            self.image.clip_composite_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, self.x, self.y, -182, 168)
 
 
