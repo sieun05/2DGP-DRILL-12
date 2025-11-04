@@ -7,7 +7,7 @@ from state_machine import StateMachine
 
 # Bird Speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-RUN_SPEED_KMPH = 100.0  # 100km/h
+RUN_SPEED_KMPH = 300.0  # 100km/h
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)  # pixel per m
@@ -25,7 +25,7 @@ FRAMES_PER_SECOND = FRAMES_PER_ACTION / ACTION_PER_TIME
 class Bird:
     image = None
 
-    def __init__(self, x=0, y=500):
+    def __init__(self, x=0, y=550):
         if Bird.image == None:
             Bird.image = load_image('bird_animation.png')
 
@@ -40,7 +40,8 @@ class Bird:
         self.frame = (self.frame + FRAMES_PER_SECOND * game_framework.frame_time) % 14
         self.x += self.dir * game_framework.frame_time * PIXEL_PER_METER
 
-
+        if self.x > 800 or self.x < 0:
+            self.dir *= -1
 
     def draw(self):
         if self.dir == 1:
