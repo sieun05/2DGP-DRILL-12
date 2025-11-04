@@ -7,7 +7,7 @@ from state_machine import StateMachine
 
 # Bird Speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-RUN_SPEED_KMPH = 100.0  # 100km/h
+RUN_SPEED_KMPH = 70.0  # 100km/h
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)  # pixel per m
@@ -16,10 +16,11 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)  # pixel per m
 #새의 크기:
 
 #Bird Action Speed
-ACTION_PER_TIME = 5     #1초에 5회 날갯짓
+TIME_PER_ACTION = 0.2   #왕복 시간
+ACTION_PER_TIME = 1.0 / TIME_PER_ACTION     #1초당 액션 수 5회
 FRAMES_PER_ACTION = 14
 
-FRAMES_PER_SECOND = FRAMES_PER_ACTION / ACTION_PER_TIME
+FRAMES_PER_SECOND = FRAMES_PER_ACTION * ACTION_PER_TIME
 
 
 class Bird:
@@ -38,7 +39,7 @@ class Bird:
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_SECOND * game_framework.frame_time) % 14
-        self.x += self.dir * game_framework.frame_time * PIXEL_PER_METER
+        self.x += self.dir * RUN_SPEED_PPS * game_framework.frame_time
 
         if self.x > 1600 or self.x < 0:
             self.dir *= -1
@@ -47,6 +48,4 @@ class Bird:
         if self.dir == 1:
             self.image.clip_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, self.x, self.y)
         else:
-            self.image.clip_composite_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, self.x, self.y, -182, 168)
-
-
+            self.image.clip_composite_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, 0, 'h', self.x, self.y, 182, 168)
