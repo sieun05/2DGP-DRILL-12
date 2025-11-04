@@ -34,13 +34,18 @@ class Bird:
 
         self.x, self.y = x, y
         self.frame = 0
-        self.face_dir = 1
+        self.dir = 1
 
     def update(self):
-        self.frame += FRAMES_PER_SECOND * game_framework.frame_time % 14
-        self.x += game_framework.frame_time * PIXEL_PER_METER
+        self.frame = (self.frame + FRAMES_PER_SECOND * game_framework.frame_time) % 14
+        self.x += self.dir * game_framework.frame_time * PIXEL_PER_METER
+
+
 
     def draw(self):
-        self.image.clip_draw(int(self.frame % 5) * 184, int(self.frame//5) * 169, 184, 169, self.x, self.y)
+        if self.dir == 1:
+            self.image.clip_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, self.x, self.y)
+        else:
+            self.image.clip_opposite_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, self.x, self.y, -182, 168)
 
 
