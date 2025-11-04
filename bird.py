@@ -41,6 +41,7 @@ class Bird:
         self.x += self.dir * RUN_SPEED_PPS * game_framework.frame_time
 
         if self.x > 1600 or self.x < 0:
+            self.x -= self.dir * RUN_SPEED_PPS * game_framework.frame_time
             self.dir *= -1
 
     def draw(self):
