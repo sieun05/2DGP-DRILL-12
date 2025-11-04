@@ -12,8 +12,8 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)  # pixel per m
 
-#Bird 한 프레임 크기 184x169
-#새의 크기:
+#Bird 한 프레임 크기 184x169(px), 새 그림 크기 110x80(px)
+#새의 크기: 55x40(px) => 165cm, 120cm
 
 #Bird Action Speed
 ACTION_PER_TIME = 3     #1초당 액션 수 3회
@@ -45,6 +45,6 @@ class Bird:
 
     def draw(self):
         if self.dir == 1:
-            self.image.clip_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, self.x, self.y)
+            self.image.clip_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, self.x, self.y, 182/2, 168/2)
         else:
-            self.image.clip_composite_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, 0, 'h', self.x, self.y, 182, 168)
+            self.image.clip_composite_draw(int(self.frame % 5) * 182, 506-int(self.frame//5 + 1) * 168, 182, 168, 0, 'h', self.x, self.y, 182/2, 168/2)
